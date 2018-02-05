@@ -2,6 +2,7 @@ theme: jekyll-theme-slate
 title: radsecproxy
 description: a generic RADIUS proxy with RadSec support
 show_downloads: true
+download_version: v1.6.9
 github:
   repository_url: https://github.com/radsecproxy/radsecproxy
   zip_url: https://github.com/radsecproxy/radsecproxy/archive/radsecproxy-1.6.9.zip
