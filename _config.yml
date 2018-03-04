@@ -5,5 +5,4 @@ show_downloads: true
 download_version: v1.6.9
 github:
   repository_url: https://github.com/radsecproxy/radsecproxy
-  zip_url: https://github.com/radsecproxy/radsecproxy/archive/radsecproxy-1.6.9.zip
-  tar_url: https://github.com/radsecproxy/radsecproxy/archive/radsecproxy-1.6.9.tar.gz
+  tar_url: https://github.com/radsecproxy/radsecproxy/releases/download/radsecproxy-1.6.9/radsecproxy-1.6.9.tar.gz
