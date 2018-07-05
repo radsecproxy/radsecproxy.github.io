@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.22.2 -->
-<!-- CreationDate: Mon Feb  5 10:44:45 2018 -->
+<!-- CreationDate: Wed Jul  4 18:19:07 2018 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -189,6 +189,59 @@ very useful since this is the default log destination. Note
 that this option is ignored if <b>&minus;f</b> is specified
 on the command line.</p>
 
+<p style="margin-left:11%;">LogThreadId</p>
+
+<p style="margin-left:22%;">This can be set to on to
+include the thread-id in the log messages (useful for
+debugging).</p>
+
+<p style="margin-left:11%;">LogFullUsername</p>
+
+<p style="margin-left:22%;">This can be set to off to only
+log the realm in Access-Accept/Reject log messages (for
+privacy).</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p>LogMAC</p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p>The LogMAC option can be used to control if and how
+Calling-Station-Id (the users Ethernet MAC address) is being
+logged. It can be set to one of Static, Original,
+VendorHashed, VendorKeyHashed, FullyHashed or
+FullyKeyHashed. The default value for LogMAC is
+Original.</p> </td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em">See
+radsecproxy.conf&minus;example for details.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p style="margin-top: 1em">LogKey</p></td>
+<td width="2%"></td>
+<td width="78%">
+
+
+<p style="margin-top: 1em">The LogKey option is used to
+specify the key to use when producing HMAC&rsquo;s as an
+effect of specifying VendorKeyHashed or FullyKeyHashed for
+the LogMAC option.</p></td></tr>
+</table>
+
 <p style="margin-left:11%;">FTicksReporting</p>
 
 <p style="margin-left:22%;">The FTicksReporting option is
@@ -199,22 +252,14 @@ for FTicksMAC is VendorKeyHashed which needs FTicksKey to be
 set.</p>
 
 <p style="margin-left:22%; margin-top: 1em">See
-radsecproxy.conf&minus;example for details. Note that
-radsecproxy has to be configured with F-Ticks support
-(&minus;&minus;enable&minus;fticks) for this option to have
-any effect.</p>
+radsecproxy.conf&minus;example for details.</p>
 
 <p style="margin-left:11%;">FTicksMAC</p>
 
-<p style="margin-left:22%;">The FTicksMAC option can be
-used to control if and how Calling-Station-Id (the users
-Ethernet MAC address) is being logged. It can be set to one
-of Static, Original, VendorHashed, VendorKeyHashed,
-FullyHashed or FullyKeyHashed.</p>
-
-<p style="margin-left:22%; margin-top: 1em">The default
-value for FTicksMAC is VendorKeyHashed. This means that
-FTicksKey has to be set.</p>
+<p style="margin-left:22%;">The FTicksMAC option has the
+same function as LogMAC for FTicks. The default for
+FTicksMAC is VendorKeyHashed which needs FTicksKey to be
+set.</p>
 
 <p style="margin-left:22%; margin-top: 1em">Before chosing
 any of Original, FullyHashed or VendorHashed, consider the
@@ -222,23 +267,10 @@ implications for user privacy when MAC addresses are
 collected. How will the logs be stored, transferred and
 accessed?</p>
 
-<p style="margin-left:22%; margin-top: 1em">See
-radsecproxy.conf&minus;example for details. Note that
-radsecproxy has to be configured with F-Ticks support
-(&minus;&minus;enable&minus;fticks) for this option to have
-any effect.</p>
-
 <p style="margin-left:11%;">FTicksKey</p>
 
-<p style="margin-left:22%;">The FTicksKey option is used to
-specify the key to use when producing HMAC&rsquo;s as an
-effect of specifying VendorKeyHashed or FullyKeyHashed for
-the FTicksMAC option.</p>
-
-<p style="margin-left:22%; margin-top: 1em">Note that
-radsecproxy has to be configured with F-Ticks support
-(&minus;&minus;enable&minus;fticks) for this option to have
-any effect.</p>
+<p style="margin-left:22%;">The FTicksKey option has the
+same function as LogKey for Fticks.</p>
 
 <p style="margin-left:11%;">FTicksSyslogFacility</p>
 
@@ -253,6 +285,14 @@ option specifies.</p>
 messages are always logged using the log level LOG_DEBUG.
 Note that specifying a file in FTicksSyslogFacility (using
 the file:/// prefix) is not supported.</p>
+
+<p style="margin-left:11%;">FTicksPrefix</p>
+
+<p style="margin-left:22%;">The FTicksPrefix option is used
+to set the prefix printed in F-Ticks messages. This allows
+for use of F-Ticks messages in non-eduroam environments. If
+no FTicksPrefix option is given, it defaults to the prefix
+used for eduroam (F&minus;TICKS/eduroam/1.0)</p>
 
 <p style="margin-left:11%;">ListenUDP</p>
 
@@ -326,7 +366,7 @@ the TTL attribute, or two numerical values separated by
 column specifying a vendor attribute, i.e.
 vendorid:attribute.</p>
 
-<p style="margin-left:11%;">AddTTL&nbsp;</p>
+<p style="margin-left:11%;">AddTTL&nbsp;&nbsp;</p>
 
 <p style="margin-left:22%;">If a TTL attribute is present,
 the proxy will decrement the value and discard the message
@@ -433,17 +473,17 @@ prefixes.</p>
 options in a client block are host, IPv4Only, IPv6Only,
 type, secret, tls, certificateNameCheck,
 matchCertificateAttribute, duplicateInterval, AddTTL,
-fticksVISCOUNTRY, fticksVISINST, rewrite, rewriteIn,
-rewriteOut, and rewriteAttribute. We already discussed the
-host option. To specify how radsecproxy should resolve a
-host given as a DNS name, the IPv4Only or the IPv6Only can
-be set to on. At most one of these options can be enabled.
-Enabling IPv4Only or IPv6Only here overrides any basic
-settings set at the top level. The value of type must be one
-of udp, tcp, tls or dtls. The value of secret is the shared
-RADIUS key used with this client. If the secret contains
-whitespace, the value must be quoted. This option is
-optional for TLS/DTLS and if omitted will default to
+tcpKeepalive fticksVISCOUNTRY, fticksVISINST, rewrite,
+rewriteIn, rewriteOut, and rewriteAttribute. We already
+discussed the host option. To specify how radsecproxy should
+resolve a host given as a DNS name, the IPv4Only or the
+IPv6Only can be set to on. At most one of these options can
+be enabled. Enabling IPv4Only or IPv6Only here overrides any
+basic settings set at the top level. The value of type must
+be one of udp, tcp, tls or dtls. The value of secret is the
+shared RADIUS key used with this client. If the secret
+contains whitespace, the value must be quoted. This option
+is optional for TLS/DTLS and if omitted will default to
 &quot;radsec&quot;. (Note that using a secret other than
 &quot;radsec&quot; for TLS is a violation of the standard
 (RFC 6614) and that the proposed standard for DTLS
@@ -497,6 +537,11 @@ option is similar to the AddTTL option used in the basic
 config. See that for details. Any value configured here
 overrides the basic one when sending messages to this
 client.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The
+tcpKeepalive option enables TCP keepalives. If keepalives
+are not answered within 30s the connection is considered
+lost.</p>
 
 <p style="margin-left:11%; margin-top: 1em">The
 fticksVISCOUNTRY option configures clients eligible to
@@ -584,9 +629,10 @@ enclosed in brackets.</p>
 <p style="margin-left:11%; margin-top: 1em">The allowed
 options in a server block are host, port, IPv4Only,
 IPv6Only, type, secret, tls, certificateNameCheck,
-matchCertificateAttribute, AddTTL, rewrite, rewriteIn,
-rewriteOut, statusServer, retryCount, dynamicLookupCommand
-and retryInterval and LoopPrevention.</p>
+matchCertificateAttribute, AddTTL, tcpKeepalive, rewrite,
+rewriteIn, rewriteOut, statusServer, retryCount,
+dynamicLookupCommand and retryInterval and
+LoopPrevention.</p>
 
 <p style="margin-left:11%; margin-top: 1em">We already
 discussed the host option. To specify how radsecproxy should
@@ -596,10 +642,11 @@ be enabled. Enabling IPv4Only or IPv6Only here overrides any
 basic settings set at the top level. The port option allows
 you to specify which port number the server uses. The usage
 of type, secret, tls, certificateNameCheck,
-matchCertificateAttribute, AddTTL, rewrite, rewriteIn and
-rewriteOut are just as specified for the client block above,
-except that defaultServer (and not defaultClient) is the
-fallback for the tls, rewrite and rewriteIn options.</p>
+matchCertificateAttribute, AddTTL, tcpKeepalive, rewrite,
+rewriteIn and rewriteOut are just as specified for the
+client block above, except that defaultServer (and not
+defaultClient) is the fallback for the tls, rewrite and
+rewriteIn options.</p>
 
 <p style="margin-left:11%; margin-top: 1em">statusServer
 can be specified to enable the use of status-server messages
@@ -680,14 +727,14 @@ done using this regexp on the value of the entire Username
 attribute. Optionally you may also have a trailing / after
 the regexp. So as an example, if you want to use regexp
 matching the domain example.com you could have a realm block
-named /@example\\.com$. Optionally this can also be written
-/@example\\.com$/. If you want to match all domains under
-the .com top domain, you could do /@.*\\.com$. Note that
-since the matching is done on the entire attribute value,
-you can also use rules like /^[a&minus;k].*@example\\.com$/
-to get some of the users in this domain to use one server,
-while other users could be matched by another realm block
-and use another server.</p>
+named /@example\.com$. Optionally this can also be written
+/@example\.com$/. If you want to match all domains under the
+.com top domain, you could do /@.*\.com$. Note that since
+the matching is done on the entire attribute value, you can
+also use rules like /^[a&minus;k].*@example\.com$/ to get
+some of the users in this domain to use one server, while
+other users could be matched by another realm block and use
+another server.</p>
 
 <p style="margin-left:11%; margin-top: 1em"><b>REALM BLOCK
 OPTIONS</b> <br>
@@ -725,7 +772,7 @@ exists, while for other domains under .bv you want to send a
 reject. At the same time you might want to send all other
 requests to some default server. After the realms for the
 subdomains, you would then have two realm definitions. One
-with the name /@.*\\.bv$ with no servers, followed by one
+with the name /@.*\.bv$ with no servers, followed by one
 with the name * with the default server defined. This may
 also be useful for blocking particular usernames.</p>
 

@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.22.2 -->
-<!-- CreationDate: Fri Feb  2 17:20:53 2018 -->
+<!-- CreationDate: Wed Jul  4 18:21:33 2018 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -53,8 +53,8 @@ TCP/TLS (RadSec) transport.</p>
 
 
 <p style="margin-top: 1em">radsecproxy [&minus;c
-configfile] [&minus;d debuglevel] [&minus;f] [&minus;i
-pidfile] [&minus;p] [&minus;v]</p></td></tr>
+<i>configfile</i>] [&minus;d <i>debuglevel</i>] [&minus;f]
+[&minus;i <i>pidfile</i>] [&minus;p] [&minus;v]</p></td></tr>
 </table>
 
 <h2>DESCRIPTION
@@ -67,9 +67,7 @@ a <b>generic RADIUS proxy</b> that in addition to to usual
 <b>RADIUS UDP</b> transport, also supports <b>TLS
 (RadSec)</b>. The aim is for the proxy to have sufficient
 features to be flexible, while at the same time to be small,
-efficient and easy to configure. Currently the executable on
-Linux is only about <i>48 KB</i>, and it uses about <i>64
-KB</i> (depending on the number of peers) while running.</p>
+efficient and easy to configure.</p>
 
 <p style="margin-left:11%; margin-top: 1em">The proxy was
 initially made to be able to deploy <b>RadSec</b> (RADIUS
@@ -105,30 +103,25 @@ use only IPv4 and some only IPv6.</p>
 
 <p style="margin-top: 1em"><b>&minus;f</b></p></td>
 <td width="8%"></td>
-<td width="26%">
+<td width="27%">
 
 
-<p style="margin-top: 1em"><i>Run in foreground</i></p></td>
-<td width="52%">
+<p style="margin-top: 1em">Run in foreground.</p></td>
+<td width="51%">
 </td></tr>
 </table>
 
-<p style="margin-left:22%; margin-top: 1em">By specifying
-this option, the proxy will run in foreground mode. That is,
-it won&rsquo;t detach. Also all logging will be done to
-stderr.</p>
+<p style="margin-left:22%;">By specifying this option, the
+proxy will run in foreground mode. That is, it won&rsquo;t
+detach. Also all logging will be done to stderr.</p>
 
-<p style="margin-left:11%;"><b>&minus;d &lt;debug
-level&gt;</b></p>
+<p style="margin-left:11%;"><b>&minus;d</b>
+<i>debuglevel</i></p>
 
-<p style="margin-left:22%; margin-top: 1em"><i>Debug
-level</i></p>
-
-<p style="margin-left:22%; margin-top: 1em">This specifies
-the debug level. It must be set to 1, 2, 3, 4 or 5, where 1
-logs only serious errors, and 5 logs everything. The default
-is 2 which logs errors, warnings and a few informational
-messages.</p>
+<p style="margin-left:22%;">This specifies the debug level.
+It must be set to 1, 2, 3, 4 or 5, where 1 logs only serious
+errors, and 5 logs everything. The default is 2 which logs
+errors, warnings and a few informational messages.</p>
 
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
@@ -142,18 +135,17 @@ messages.</p>
 <td width="10%">
 
 
-<p><i>Pretend</i></p></td>
+<p>Pretend</p></td>
 <td width="68%">
 </td></tr>
 </table>
 
-<p style="margin-left:22%; margin-top: 1em">The proxy reads
-configuration files and performs initialisation as usual,
-but exits prior to creating any sockets. It will return
-different exit codes depending on whether the configuration
-files are okay. This may be used to verify configuration
-files, and can be done while another instance is
-running.</p>
+<p style="margin-left:22%;">The proxy reads configuration
+files and performs initialisation as usual, but exits prior
+to creating any sockets. It will return different exit codes
+depending on whether the configuration files are okay. This
+may be used to verify configuration files, and can be done
+while another instance is running.</p>
 
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
@@ -164,38 +156,27 @@ running.</p>
 
 <p style="margin-top: 1em"><b>&minus;v</b></p></td>
 <td width="8%"></td>
-<td width="20%">
+<td width="35%">
 
 
-<p style="margin-top: 1em"><i>Print version</i></p></td>
-<td width="58%">
+<p style="margin-top: 1em">Print version and exit.</p></td>
+<td width="43%">
 </td></tr>
 </table>
 
-<p style="margin-left:22%; margin-top: 1em">When this
-option is specified, the proxy will simply print version
-information and exit.</p>
+<p style="margin-left:11%;"><b>&minus;c</b>
+<i>configfile</i></p>
 
-<p style="margin-left:11%;"><b>&minus;c &lt;config file
-path&gt;</b></p>
+<p style="margin-left:22%;">This option allows you to
+specify which config file to use. This is useful if you want
+to use a config file that is not in any of the default
+locations.</p>
 
-<p style="margin-left:22%; margin-top: 1em"><i>Config file
-path</i></p>
+<p style="margin-left:11%;"><b>&minus;i</b>
+<i>pidfile</i></p>
 
-<p style="margin-left:22%; margin-top: 1em">This option
-allows you to specify which config file to use. This is
-useful if you want to use a config file that is not in any
-of the default locations.</p>
-
-<p style="margin-left:11%;"><b>&minus;i &lt;pid file
-path&gt;</b></p>
-
-<p style="margin-left:22%; margin-top: 1em"><i>PID file
-path</i></p>
-
-<p style="margin-left:22%; margin-top: 1em">This option
-tells the proxy to create a PID file with the specified
-path.</p>
+<p style="margin-left:22%;">This option tells the proxy to
+create a PID file with the specified path.</p>
 
 <h2>SIGNALS
 <a name="SIGNALS"></a>
@@ -222,10 +203,12 @@ below.</p>
 the log file.</p></td></tr>
 </table>
 
+<p style="margin-left:22%;">When using TLS or DTLS, reload
+certificate CRLs.</p>
+
 <p style="margin-left:11%;"><b>SIGPIPE</b></p>
 
-<p style="margin-left:22%; margin-top: 1em">This signal is
-ignored.</p>
+<p style="margin-left:22%;">This signal is ignored.</p>
 
 <h2>FILES
 <a name="FILES"></a>
@@ -233,7 +216,7 @@ ignored.</p>
 
 
 
-<p style="margin-left:11%; margin-top: 1em"><b>/etc/radsecproxy.conf</b></p>
+<p style="margin-left:11%; margin-top: 1em"><b>/usr/local/etc/radsecproxy.conf</b></p>
 
 <p style="margin-left:22%; margin-top: 1em">The default
 configuration file.</p>
