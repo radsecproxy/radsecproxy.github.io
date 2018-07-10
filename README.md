@@ -6,7 +6,7 @@ There are however other situations where a RADIUS proxy might be useful. Some pe
 
 ## Latest release
 
-The latest release of radsecproxy is version [{{ site.download_version }}]({{ site.github.tar_url }}), [signature]({{_site.github.asc_url}})
+The latest release of radsecproxy is version [{{ site.download_version }}]({{ site.github.tar_url }}), [signature]({{_site.github.asc_url_}})
 
 For development releases or older versions, visit the [github page]({{ site.github.repository_url }})
 
