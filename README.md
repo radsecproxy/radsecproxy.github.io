@@ -27,3 +27,5 @@ Radsecproxy was written by Stig Venaas.
 
 Radsecproxy is currently being maintained by Fabian Mauchle
 <fabian.mauchle@switch.ch>.
+
+PGP Key: [210FA7FB28E45779777BAA1C5963D59C3D68633B](fabian.mauchle.asc)
