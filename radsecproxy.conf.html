@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.22.2 -->
-<!-- CreationDate: Wed Jul  4 18:19:07 2018 -->
+<!-- CreationDate: Mon Sep  3 16:57:15 2018 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -178,16 +178,16 @@ with facility LOG_DAEMON. Using this option you can specify
 another syslog facility, or you may specify that logging
 should be to a particular file, not using syslog. The value
 must be either a file or syslog URL. The file URL is the
-standard one, specifying a local file that should be used.
-For syslog, you must use the syntax:
-x&minus;syslog:///FACILITY where FACILITY must be one of
-LOG_DAEMON, LOG_MAIL, LOG_USER, LOG_LOCAL0, LOG_LOCAL1,
-LOG_LOCAL2, LOG_LOCAL3, LOG_LOCAL4, LOG_LOCAL5, LOG_LOCAL6
-or LOG_LOCAL7. You may omit the facility from the URL to
-specify logging to the default facility, but this is not
-very useful since this is the default log destination. Note
-that this option is ignored if <b>&minus;f</b> is specified
-on the command line.</p>
+standard one file:///var/log/radius.log , specifying a local
+file that should be used. For syslog, you must use the
+syntax: x&minus;syslog:///FACILITY where FACILITY must be
+one of LOG_DAEMON, LOG_MAIL, LOG_USER, LOG_LOCAL0,
+LOG_LOCAL1, LOG_LOCAL2, LOG_LOCAL3, LOG_LOCAL4, LOG_LOCAL5,
+LOG_LOCAL6 or LOG_LOCAL7. You may omit the facility from the
+URL to specify logging to the default facility, but this is
+not very useful since this is the default log destination.
+Note that this option is ignored if <b>&minus;f</b> is
+specified on the command line.</p>
 
 <p style="margin-left:11%;">LogThreadId</p>
 
@@ -261,7 +261,7 @@ same function as LogMAC for FTicks. The default for
 FTicksMAC is VendorKeyHashed which needs FTicksKey to be
 set.</p>
 
-<p style="margin-left:22%; margin-top: 1em">Before chosing
+<p style="margin-left:22%; margin-top: 1em">Before choosing
 any of Original, FullyHashed or VendorHashed, consider the
 implications for user privacy when MAC addresses are
 collected. How will the logs be stored, transferred and
