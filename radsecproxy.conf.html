@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.19.2 -->
-<!-- CreationDate: Thu Jul  4 09:01:38 2019 -->
+<!-- CreationDate: Tue Oct  1 16:25:37 2019 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -322,7 +322,7 @@ to set the <i>prefix</i> printed in F-Ticks messages. This
 allows for use of F-Ticks messages in non-eduroam
 environments. If no FTicksPrefix option is given, it
 defaults to the prefix used for eduroam
-(F&minus;TICKS/eduroam/1.0)</p>
+(<i>F&minus;TICKS/eduroam/1.0</i>).</p>
 
 <p style="margin-left:11%; margin-top: 1em"><b>ListenUDP
 (</b><i>address</i><b>|</b>*<b>)[</b>:<i>port</i><b>] <br>
@@ -1070,7 +1070,9 @@ specified multiple times.</p>
 (</b>on<b>|</b>off<b>)</b></p>
 
 <p style="margin-left:22%;">Enable checking peer
-certificate against the CRL (default off).</p>
+certificate against the CRL (default off). <br>
+Note that radsecproxy does not fetch the CRLs itslef. This
+has to be done separately, e.g. with <b>fetch-crl</b>(8)</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>CacheExpiry</b>
@@ -1079,7 +1081,7 @@ certificate against the CRL (default off).</p>
 <p style="margin-left:22%;">Specify how many <i>seconds</i>
 the CA and CRL information should be cached. By default, the
 CA and CRL are loaded at startup and cached indefinetely.
-after the configured time, the CA CRL are re-read.
+After the configured time, the CA CRL are re-read.
 Alternatively, reloading the CA and CRL can be triggered by
 sending a SIGHUP to the radsecproxy process. This option may
 be set to zero to disable caching.</p>
@@ -1170,7 +1172,7 @@ The format of <i>value</i> is the same as for
 <i>attribute</i>:<i>value</i></p>
 
 <p style="margin-left:22%;">Add an <i>attribute</i> to the
-radius mesage and set it to <i>value</i>, only if the
+radius message and set it to <i>value</i>, only if the
 attribute is not yet present on the message. The format of
 <i>value</i> is the same as for <b>addAttribute</b>
 above.</p>
@@ -1260,8 +1262,7 @@ removed.</p>
 
 
 
-<p style="margin-left:11%; margin-top: 1em"><b>radsecproxy</b>(1),
-<a href="https://tools.ietf.org/html/rfc6614"> 	 Transport Layer Security (TLS) Encryption for RADIUS 	</a></p>
+<p style="margin-left:11%; margin-top: 1em"><b>radsecproxy</b>(1)</p>
 <hr>
 </body>
 </html>
