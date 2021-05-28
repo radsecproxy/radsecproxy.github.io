@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.19.2 -->
-<!-- CreationDate: Fri Aug  7 07:23:42 2020 -->
+<!-- CreationDate: Wed May 26 08:10:58 2021 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -52,7 +52,7 @@ arguments, and then read the configuration file. Normally
 radsecproxy will read the configuration file
 <i>/usr/local/etc/radsecproxy.conf</i>. The command line
 <b>&minus;c</b> option can be used to instead read an
-alternate file (see <b>radsecproxy</b>(1) for details).</p>
+alternate file (see <b>radsecproxy</b>(8) for details).</p>
 
 <p style="margin-left:11%; margin-top: 1em">If the
 configuration file can not be found, the proxy will exit
@@ -209,10 +209,9 @@ messages should go. By default the messages go to syslog
 with facility <b>LOG_DAEMON</b>. Using this option you can
 specify another syslog facility, or you may specify that
 logging should be to a particular file, not using syslog.
-The value must be either a file or syslog URL. The file URL
-is the standard one <b>file:///var/log/radius.log</b>,
-specifying a local file that should be used. For syslog, you
-must use the syntax: <b>x&minus;syslog:///FACILITY</b> where
+The value must be either a file URL like
+<b>file:///path/to/your/logfile.log</b> or a syslog URL
+using the syntax: <b>x&minus;syslog:///FACILITY</b> where
 <b>FACILITY</b> must be one of <b>LOG_DAEMON</b>,
 <b>LOG_MAIL</b>, <b>LOG_USER</b>, <b>LOG_LOCAL0</b>,
 <b>LOG_LOCAL1</b>, <b>LOG_LOCAL2</b>, <b>LOG_LOCAL3</b>,
@@ -563,17 +562,24 @@ the default behaviour of matching CN or SubjectAltName
 against the specified hostname or IP address.</p>
 
 
-<p style="margin-left:11%; margin-top: 1em"><b>matchCertificateAttribute
-(</b> CN <b>|</b> SubjectAltName:URI <b>|</b>
-SubjectAltName:DNS <b>) :</b>/<i>regexp</i>/ <b><br>
+<p style="margin-left:11%; margin-top: 1em"><b>MatchCertificateAttribute</b>
+CN:/<i>regexp</i>/ <b><br>
 MatchCertificateAttribute</b>
-SubjectAltName:IP:<i>address</i></p>
+SubjectAltName:DNS:/<i>regexp</i>/ <b><br>
+MatchCertificateAttribute</b>
+SubjectAltName:URI:/<i>regexp</i>/ <b><br>
+MatchCertificateAttribute</b>
+SubjectAltName:IP:<i>address</i> <b><br>
+MatchCertificateAttribute</b> SubjectAltName:rID:<i>oid</i>
+<b><br>
+MatchCertificateAttribute</b>
+SubjectAltName:otherName:<i>oid</i>:/<i>regexp</i>/</p>
 
 <p style="margin-left:22%;">Perform additional validation
 of certificate attributes. Currently matching of CN and
-SubjectAltName types URI DNS and IP is supported. Note that
-currently this option can only be specified once in a client
-block.</p>
+SubjectAltName types URI, DNS, IP, rID, and otherName is
+supported. If specified multiple times, all terms must match
+for the certificate to be considered valid.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>DuplicateInterval</b>
@@ -729,6 +735,13 @@ blocks.</p>
 (UDP/TCP) to connect to. If omitted, UDP and TCP will
 default to 1812 while TLS and DTLS will default to 2083.</p>
 
+<p style="margin-left:11%; margin-top: 1em"><b>Source
+(</b><i>address</i><b>|</b>*<b>)[</b>:<i>port</i><b>]</b></p>
+
+<p style="margin-left:22%;">Specify the source address
+and/or port to use for this server. See <b>Source...</b>
+options above.</p>
+
 
 <p style="margin-left:11%; margin-top: 1em"><b>DynamicLookupCommand</b>
 <i>command</i></p>
@@ -816,6 +829,21 @@ be applied if defined. No default blocks are applied for
 <b>LoopPrevention</b> option for this server. See section
 <b>BASIC OPTIONS</b> for details on this option.</p>
 
+
+<p style="margin-left:11%; margin-top: 1em"><b>BlockingStartup
+(</b>on<b>|</b>off)</p>
+
+<p style="margin-left:22%;">Start the dynamic server in
+blocking mode (default off), treating it as if it was
+already connected and enqueue requests to this server.
+Queued requests will be sent out when the connection is
+established. If however the dynamic lookup or the connection
+fails, the queued requests will be lost. (This is only
+considered for dynamic lookup servers. Ie when
+DynamicLookupCommand is specified) Warning: when the dynamic
+lookup and connection process is slow, this wil block the
+respective realm for that time.</p>
+
 <p style="margin-left:11%; margin-top: 1em">The meaning and
 syntax of the following options are exactly the same as for
 the client block. The details are not repeated here. Please
@@ -829,11 +857,7 @@ Type</b> <i>type</i> <b><br>
 Secret</b> <i>secret</i> <b><br>
 TLS</b> <i>tls</i> <b><br>
 CertificateNameCheck (</b>on<b>|</b>off<b>) <br>
-matchCertificateAttribute (</b> CN <b>|</b>
-SubjectAltName:URI <b>|</b> SubjectAltName:DNS <b>)
-:</b>/<i>regexp</i>/ <b><br>
-MatchCertificateAttribute</b>
-SubjectAltName:IP:<i>address</i> <b><br>
+MatchCertificateAttribute</b> ... <b><br>
 AddTTL</b> 1-255 <b><br>
 TCPKeepalive (</b>on<b>|</b>off<b>)</b></p>
 
@@ -1063,15 +1087,16 @@ private-key.</p>
 <i>oid</i></p>
 
 <p style="margin-left:22%;">Require the peers certificate
-to adhere to the policy specified by <i>oid</i>. This can be
-specified multiple times.</p>
+to adhere to the policy specified by <i>oid</i>. When
+specified multiple times at least one policy must be valid
+in the peer certificate.</p>
 
 <p style="margin-left:11%; margin-top: 1em"><b>CRLCheck
 (</b>on<b>|</b>off<b>)</b></p>
 
 <p style="margin-left:22%;">Enable checking peer
 certificate against the CRL (default off). <br>
-Note that radsecproxy does not fetch the CRLs itslef. This
+Note that radsecproxy does not fetch the CRLs itself. This
 has to be done separately, e.g. with <b>fetch-crl</b>(8)</p>
 
 
@@ -1085,6 +1110,45 @@ After the configured time, the CA CRL are re-read.
 Alternatively, reloading the CA and CRL can be triggered by
 sending a SIGHUP to the radsecproxy process. This option may
 be set to zero to disable caching.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>CipherList</b>
+<i>ciphers</i></p>
+
+<p style="margin-left:22%;">Specify the list of accepted
+<i>ciphers</i>. See <b>openssl-ciphers</b>(1).</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>CipherSuites</b>
+<i>ciphersuites</i></p>
+
+<p style="margin-left:22%;">Specify the <i>ciphersuites</i>
+to be used for TLS1.3. See <b>openssl-ciphers</b>(1). <br>
+Note this requires openssl 1.1.1</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>TlsVersion</b>
+( <i>version</i> | <i>minversion</i>:<i>maxversion</i> )
+<b><br>
+DtlsVersion</b> ( <i>version</i> |
+<i>minversion</i>:<i>maxversion</i> )</p>
+
+<p style="margin-left:22%;">Specify the TLS/DTLS protocol
+<i>version</i> to be used. <br>
+Specify the range of allowed protocol versions between
+<i>minversion</i> and <i>maxversion</i> (inclusive). If
+either is left out, any version up to, or starting from this
+version is allowed. E.g. &quot;TLS1_2:&quot; will allow
+TLSv1.2 or later. <br>
+Currently supported values are
+<b>SSL3</b>,<b>TLS1</b>,<b>TLS1_1</b>,<b>TLS1_2</b>,<b>TLS1_3</b>
+for TLS and <b>DTLS1</b>,<b>DTLS1_1</b> for DTLS.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>DhFile</b>
+<i>file</i></p>
+
+<p style="margin-left:22%;">DH parameter <i>file</i> to
+use. See <b>openssl-dhparam</b>(1)</p>
 
 <a name="REWRITE BLOCK"></a>
 <h2>REWRITE BLOCK</h2>
@@ -1230,7 +1294,7 @@ the given vendor id are removed.</p>
 
 <p style="margin-left:22%;">Enable whitelist mode. All
 attributes except those configured with
-<b>WhitelistAttrbiute</b> or <b>WhitelistVendorAttribute</b>
+<b>WhitelistAttribute</b> or <b>WhitelistVendorAttribute</b>
 will be removed. While whitelist mode is active,
 <b>RemoveAttribute</b> and <b>RemoveVendorAttribute</b>
 statements are ignored.</p>
@@ -1262,7 +1326,7 @@ removed.</p>
 
 
 
-<p style="margin-left:11%; margin-top: 1em"><b>radsecproxy</b>(1)</p>
+<p style="margin-left:11%; margin-top: 1em"><b>radsecproxy</b>(8)</p>
 <hr>
 </body>
 </html>

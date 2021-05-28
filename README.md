@@ -4,19 +4,29 @@ The proxy was initially made to be able to deploy RadSec (RADIUS over TLS) so th
 
 There are however other situations where a RADIUS proxy might be useful. Some people deploy RADIUS topologies where they want to route RADIUS messages to the right server. The nodes that do purely routing could be using a proxy. Some people may also wish to deploy a proxy on a site boundary. Since the proxy supports both IPv4 and IPv6, it could also be used to allow communication in cases where some RADIUS nodes use only IPv4 and some only IPv6.
 
+## Security Advisories
+
+Seurity advisories are published on [github]({{ site.github.repository_url }}/security/advisories)
+
 ## Latest release
 
 The latest release of radsecproxy is version [{{ site.download_version }}]({{ site.github.tar_url }}), [signature]({{ site.github.tar_url }}.asc)
 
-For development releases or older versions, visit the [github page]({{ site.github.repository_url }})
+Official packages are available:
+- Debian: `apt-get install radsecproxy`
+- Fedora: `dnf install radsecproxy`
+- FreeBSD: `pkg install radsecproxy`
+- NetBSD: `pkgin install radsecproxy`
+
+For development releases or older versions, visit the [github page]({{ site.github.repository_url }}/releases)
 
 ## Documentation
 
-For documentation, consult the manpages: [radsecproxy(1)](radsecproxy.html) [radsecproxy.conf(5)](radsecproxy.conf.html) [radsecproxy-hash(1)](radsecproxy-hash.html)
+For documentation, consult the manpages: [radsecproxy(8)](radsecproxy.html) [radsecproxy.conf(5)](radsecproxy.conf.html) [radsecproxy-hash(8)](radsecproxy-hash.html)
 
 ## Contributing
 
-Please report issues, request features etc on the [github page]({{ site.github.repository_url }}/releases)
+Please report issues, request features etc on the [github page]({{ site.github.repository_url }}/issues)
 
 There is also the old mailing list: [radsecproxy@lists.nordu.net](mailto:radsecproxy@lists.nordu.net)
 (note: the mailing list will remain operational for now)
