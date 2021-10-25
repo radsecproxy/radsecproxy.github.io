@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.19.2 -->
-<!-- CreationDate: Wed May 26 08:10:58 2021 -->
+<!-- CreationDate: Mon Oct 25 16:59:39 2021 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -490,12 +490,13 @@ later, which then will never be matched.</p>
 <p style="margin-left:11%; margin-top: 1em">In the case of
 TLS/DTLS, the name of the client must match the FQDN or IP
 address in the client certificate (CN or SubectAltName:DNS
-or SubjectAltName:IP respectively). Note that this is not
-required when the client name is an IP prefix. If
-overlapping clients are defined (see section above), they
-will be searched for matching
-<b>MatchCertificateAttribute</b>, but they must reference
-the same tls block.</p>
+or SubjectAltName:IP respectively) and any
+<b>MatchCertificateAttribute</b> to be positively
+identified. Note that no FQDN/IP is checked when using an IP
+prefix. If overlapping clients are defined (see section
+above), they will be searched for positive identification,
+but only among clients referencing the same tls block
+(selected by the first matching IP address or prefix).</p>
 
 <p style="margin-left:11%; margin-top: 1em">The allowed
 options in a client block are:</p>
@@ -1124,7 +1125,7 @@ be set to zero to disable caching.</p>
 
 <p style="margin-left:22%;">Specify the <i>ciphersuites</i>
 to be used for TLS1.3. See <b>openssl-ciphers</b>(1). <br>
-Note this requires openssl 1.1.1</p>
+Note this requires OpenSSL 1.1.1</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>TlsVersion</b>
@@ -1139,7 +1140,8 @@ Specify the range of allowed protocol versions between
 <i>minversion</i> and <i>maxversion</i> (inclusive). If
 either is left out, any version up to, or starting from this
 version is allowed. E.g. &quot;TLS1_2:&quot; will allow
-TLSv1.2 or later. <br>
+TLSv1.2 or later. If omitted, use the system defaults set in
+openssl.conf <br>
 Currently supported values are
 <b>SSL3</b>,<b>TLS1</b>,<b>TLS1_1</b>,<b>TLS1_2</b>,<b>TLS1_3</b>
 for TLS and <b>DTLS1</b>,<b>DTLS1_1</b> for DTLS.</p>
@@ -1148,7 +1150,9 @@ for TLS and <b>DTLS1</b>,<b>DTLS1_1</b> for DTLS.</p>
 <i>file</i></p>
 
 <p style="margin-left:22%;">DH parameter <i>file</i> to
-use. See <b>openssl-dhparam</b>(1)</p>
+use. See <b>openssl-dhparam</b>(1) <br>
+Note: starting with OpenSSL 3.0, use of custom DH parameters
+is discouraged.</p>
 
 <a name="REWRITE BLOCK"></a>
 <h2>REWRITE BLOCK</h2>
