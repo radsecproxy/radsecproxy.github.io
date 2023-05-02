@@ -1,5 +1,5 @@
-<!-- Creator     : groff version 1.19.2 -->
-<!-- CreationDate: Mon Jan 23 16:16:57 2023 -->
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Tue May  2 21:28:15 2023 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,16 +8,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <meta name="Content-Style" content="text/css">
 <style type="text/css">
-       p     { margin-top: 0; margin-bottom: 0; }
-       pre   { margin-top: 0; margin-bottom: 0; }
-       table { margin-top: 0; margin-bottom: 0; }
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
 </style>
 <title>radsecproxy</title>
 
 </head>
 <body>
 
-<h1 align=center>radsecproxy</h1>
+<h1 align="center">radsecproxy</h1>
 
 <a href="#NAME">NAME</a><br>
 <a href="#SYNOPSIS">SYNOPSIS</a><br>
@@ -30,25 +31,35 @@
 <hr>
 
 
+<h2>NAME
 <a name="NAME"></a>
-<h2>NAME</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em">radsecproxy - a
 generic RADIUS proxy that provides both RADIUS UDP and
 TCP/TLS (RadSec) transport.</p>
 
+<h2>SYNOPSIS
 <a name="SYNOPSIS"></a>
-<h2>SYNOPSIS</h2>
+</h2>
 
 
-<p style="margin-left:29%; margin-top: 1em">radsecproxy
-[&minus;c <i>configfile</i>] [&minus;d <i>debuglevel</i>]
-[&minus;f] [&minus;i <i>pidfile</i>] [&minus;p]
-[&minus;v]</p>
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="89%">
 
+
+<p style="margin-top: 1em">radsecproxy [&minus;c
+<i>configfile</i>] [&minus;d <i>debuglevel</i>] [&minus;f]
+[&minus;i <i>pidfile</i>] [&minus;p] [&minus;v]</p></td></tr>
+</table>
+
+<h2>DESCRIPTION
 <a name="DESCRIPTION"></a>
-<h2>DESCRIPTION</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em">radsecproxy is
@@ -78,27 +89,26 @@ proxy <b>supports both IPv4 and IPv6</b>, it could also be
 used to allow communication in cases where some RADIUS nodes
 use only IPv4 and some only IPv6.</p>
 
+<h2>OPTIONS
 <a name="OPTIONS"></a>
-<h2>OPTIONS</h2>
+</h2>
 
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="11%"></td>
 <td width="3%">
 
 
-
-<p style="margin-top: 1em" valign="top"><b>&minus;f</b></p> </td>
+<p style="margin-top: 1em"><b>&minus;f</b></p></td>
 <td width="8%"></td>
 <td width="27%">
 
 
-<p style="margin-top: 1em" valign="top">Run in
-foreground.</p> </td>
+<p style="margin-top: 1em">Run in foreground.</p></td>
 <td width="51%">
-</td>
+</td></tr>
 </table>
 
 <p style="margin-left:22%;">By specifying this option, the
@@ -113,22 +123,21 @@ It must be set to 1, 2, 3, 4 or 5, where 1 logs only serious
 errors, and 5 logs everything. The default is 2 which logs
 errors, warnings and a few informational messages.</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="11%"></td>
 <td width="3%">
 
 
-
-<p style="margin-top: 1em" valign="top"><b>&minus;p</b></p> </td>
+<p><b>&minus;p</b></p></td>
 <td width="8%"></td>
 <td width="10%">
 
 
-<p style="margin-top: 1em" valign="top">Pretend</p></td>
+<p>Pretend</p></td>
 <td width="68%">
-</td>
+</td></tr>
 </table>
 
 <p style="margin-left:22%;">The proxy reads configuration
@@ -138,23 +147,21 @@ depending on whether the configuration files are okay. This
 may be used to verify configuration files, and can be done
 while another instance is running.</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="11%"></td>
 <td width="3%">
 
 
-
-<p style="margin-top: 1em" valign="top"><b>&minus;v</b></p> </td>
+<p style="margin-top: 1em"><b>&minus;v</b></p></td>
 <td width="8%"></td>
 <td width="35%">
 
 
-<p style="margin-top: 1em" valign="top">Print version and
-exit.</p> </td>
+<p style="margin-top: 1em">Print version and exit.</p></td>
 <td width="43%">
-</td>
+</td></tr>
 </table>
 
 <p style="margin-left:11%;"><b>&minus;c</b>
@@ -171,28 +178,29 @@ locations.</p>
 <p style="margin-left:22%;">This option tells the proxy to
 create a PID file with the specified path.</p>
 
+<h2>SIGNALS
 <a name="SIGNALS"></a>
-<h2>SIGNALS</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em">The proxy
 generally exits on all signals. The exceptions are listed
 below.</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="11%"></td>
 <td width="9%">
 
 
-<p style="margin-top: 1em" valign="top"><b>SIGHUP</b></p></td>
+<p><b>SIGHUP</b></p></td>
 <td width="2%"></td>
 <td width="78%">
 
 
-<p style="margin-top: 1em" valign="top">When logging to a
-file, this signal forces a reopen of the log file.</p></td>
+<p>When logging to a file, this signal forces a reopen of
+the log file.</p></td></tr>
 </table>
 
 <p style="margin-left:22%;">When using TLS or DTLS, reload
@@ -202,8 +210,9 @@ certificate CRLs.</p>
 
 <p style="margin-left:22%;">This signal is ignored.</p>
 
+<h2>FILES
 <a name="FILES"></a>
-<h2>FILES</h2>
+</h2>
 
 
 
@@ -212,8 +221,9 @@ certificate CRLs.</p>
 <p style="margin-left:22%; margin-top: 1em">The default
 configuration file.</p>
 
+<h2>SEE ALSO
 <a name="SEE ALSO"></a>
-<h2>SEE ALSO</h2>
+</h2>
 
 
 

@@ -1,5 +1,5 @@
-<!-- Creator     : groff version 1.19.2 -->
-<!-- CreationDate: Mon Jan 23 16:16:57 2023 -->
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Tue May  2 21:28:15 2023 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,16 +8,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <meta name="Content-Style" content="text/css">
 <style type="text/css">
-       p     { margin-top: 0; margin-bottom: 0; }
-       pre   { margin-top: 0; margin-bottom: 0; }
-       table { margin-top: 0; margin-bottom: 0; }
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
 </style>
 <title>radsecproxy.conf</title>
 
 </head>
 <body>
 
-<h1 align=center>radsecproxy.conf</h1>
+<h1 align="center">radsecproxy.conf</h1>
 
 <a href="#NAME">NAME</a><br>
 <a href="#DESCRIPTION">DESCRIPTION</a><br>
@@ -34,16 +35,18 @@
 <hr>
 
 
+<h2>NAME
 <a name="NAME"></a>
-<h2>NAME</h2>
+</h2>
 
 
 
 <p style="margin-left:11%; margin-top: 1em">radsecproxy.conf
 &minus; Radsec proxy configuration file</p>
 
+<h2>DESCRIPTION
 <a name="DESCRIPTION"></a>
-<h2>DESCRIPTION</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em">When the proxy
@@ -61,8 +64,9 @@ facility so that any configuration file may include other
 configuration files. The proxy will also exit on
 configuration errors.</p>
 
+<h2>CONFIGURATION SYNTAX
 <a name="CONFIGURATION SYNTAX"></a>
-<h2>CONFIGURATION SYNTAX</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em">When the
@@ -91,7 +95,7 @@ and has the format:</p>
 <p style="margin-left:22%; margin-top: 1em">blocktype name
 {</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="8%"></td>
@@ -99,21 +103,21 @@ and has the format:</p>
 <td width="85%">
 
 
-<p valign="top">option value</p></td>
+<p>option value</p></td></tr>
 <tr valign="top" align="left">
 <td width="8%"></td>
 <td width="7%"></td>
 <td width="85%">
 
 
-<p valign="top">option value</p></td>
+<p>option value</p></td></tr>
 <tr valign="top" align="left">
 <td width="8%"></td>
 <td width="7%"></td>
 <td width="85%">
 
 
-<p valign="top">...</p></td>
+<p>...</p></td></tr>
 </table>
 
 <p style="margin-left:22%;">}</p>
@@ -168,8 +172,9 @@ included file, the proxy returns to read the next line
 following the <i>Include</i> option. Included files may
 again include other files.</p>
 
+<h2>BASIC OPTIONS
 <a name="BASIC OPTIONS"></a>
-<h2>BASIC OPTIONS</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em">The following
@@ -419,8 +424,9 @@ can both be used as a basic option and inside blocks. For
 the full description, see the configuration syntax section
 above.</p>
 
+<h2>BLOCKS
 <a name="BLOCKS"></a>
-<h2>BLOCKS</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em">There are five
@@ -438,22 +444,23 @@ option values may reference a block by name, in which case
 the block name must be previously defined. Hence the order
 of the blocks may be significant.</p>
 
+<h2>CLIENT BLOCK
 <a name="CLIENT BLOCK"></a>
-<h2>CLIENT BLOCK</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>client
 (</b><i>name</i><b>|</b><i>fqdn</i><b>|(</b><i>address</i><b>[/</b><i>length</i><b>]))</b>
 {</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="8%"></td>
 <td width="92%">
 
 
-<p valign="top">...</p></td>
+<p>...</p></td></tr>
 </table>
 
 <p style="margin-left:11%;">}</p>
@@ -663,22 +670,23 @@ client. Example usage:</p>
 <p style="margin-left:22%; margin-top: 1em">RewriteAttribute
 User-Name:/^(.*)@local$/\1@example.com/</p>
 
+<h2>SERVER BLOCK
 <a name="SERVER BLOCK"></a>
-<h2>SERVER BLOCK</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>server
 (</b><i>name</i><b>|((</b><i>fqdn</i><b>|</b><i>address</i><b>)[</b>:<i>port</i><b>]))</b>
 {</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="8%"></td>
 <td width="92%">
 
 
-<p valign="top">...</p></td>
+<p>...</p></td></tr>
 </table>
 
 <p style="margin-left:11%;">}</p>
@@ -862,22 +870,23 @@ MatchCertificateAttribute</b> ... <b><br>
 AddTTL</b> 1-255 <b><br>
 TCPKeepalive (</b>on<b>|</b>off<b>)</b></p>
 
+<h2>REALM BLOCK
 <a name="REALM BLOCK"></a>
-<h2>REALM BLOCK</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>realm
 (</b>*<b>|</b><i>realm</i><b>|</b>/<i>regex</i>/<b>)</b>
 {</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="8%"></td>
 <td width="92%">
 
 
-<p valign="top">...</p></td>
+<p>...</p></td></tr>
 </table>
 
 <p style="margin-left:11%;">}</p>
@@ -997,21 +1006,22 @@ Accounting-Response back. This stops clients from
 retransmitting Accounting-Request messages when a realm has
 no accountingServer configured.</p>
 
+<h2>TLS BLOCK
 <a name="TLS BLOCK"></a>
-<h2>TLS BLOCK</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>tls</b>
 <i>name</i> {</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="8%"></td>
 <td width="92%">
 
 
-<p valign="top">...</p></td>
+<p>...</p></td></tr>
 </table>
 
 <p style="margin-left:11%;">}</p>
@@ -1155,21 +1165,22 @@ use. See <b>openssl-dhparam</b>(1) <br>
 Note: starting with OpenSSL 3.0, use of custom DH parameters
 is discouraged.</p>
 
+<h2>REWRITE BLOCK
 <a name="REWRITE BLOCK"></a>
-<h2>REWRITE BLOCK</h2>
+</h2>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>rewrite</b>
 <i>name</i> {</p>
 
-<table width="100%" border=0 rules="none" frame="void"
+<table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
 <td width="8%"></td>
 <td width="92%">
 
 
-<p valign="top">...</p></td>
+<p>...</p></td></tr>
 </table>
 
 <p style="margin-left:11%;">}</p>
@@ -1326,8 +1337,9 @@ attribute is whitelisted. Otherwise only the specified
 subattribute is kept but all other subattributes are
 removed.</p>
 
+<h2>SEE ALSO
 <a name="SEE ALSO"></a>
-<h2>SEE ALSO</h2>
+</h2>
 
 
 
