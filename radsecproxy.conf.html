@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.22.4 -->
-<!-- CreationDate: Tue May  2 21:28:15 2023 -->
+<!-- CreationDate: Fri May 26 16:18:08 2023 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -415,6 +415,17 @@ is done for both clients and servers. At most one of
 IPv4Only and IPv6Only can be enabled. Note that this can be
 overridden in client and server blocks, see below.</p>
 
+<p style="margin-left:11%; margin-top: 1em"><b>SNI
+(</b>on<b>|</b>off<b>)</b></p>
+
+<p style="margin-left:22%;">Server Name Indication (SNI) is
+an extension to the TLS protocol. It allows a client to
+indicate which hostname it is trying to connect to at the
+start of the TLS handshake. Enabling this will use the
+extension for all TLS and DTLS servers which specify a
+hostname (not IP address). This can be overridden in server
+blocks, see below.</p>
+
 <p style="margin-left:11%; margin-top: 1em"><b>Include</b>
 <i>file</i></p>
 
@@ -560,6 +571,14 @@ is not specified, the TLS block with the name
 defined (in that order). If the specified TLS block name
 does not exist, or the option is not specified and none of
 the defaults exist, the proxy will exit with an error.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>ServerName</b>
+<i>servername</i></p>
+
+<p style="margin-left:22%;">Use <i>servername</i> for the
+certificate name check instead of <b>host</b> or the client
+block name (e.g. if <b>host</b> uses static IP address).</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>CertificateNameCheck
@@ -752,27 +771,53 @@ and/or port to use for this server. See <b>Source...</b>
 options above.</p>
 
 
+<p style="margin-left:11%; margin-top: 1em"><b>ServerName</b>
+<i>servername</i></p>
+
+<p style="margin-left:22%;">Use <i>servername</i> for the
+certificate name check instead of <b>host</b> or the server
+block name (e.g. if <b>host</b> uses static IP address).
+Additionally, this name is used for SNI (if enabled), unless
+<b>SNIservername</b> is set.</p>
+
+
 <p style="margin-left:11%; margin-top: 1em"><b>DynamicLookupCommand</b>
 <i>command</i></p>
 
 <p style="margin-left:22%;">Execute the <i>command</i> to
-dynamically configure a server. The executable file should
-be given with full path and will be invoked with the name of
-the realm as its first and only argument. It should either
-print a valid <b>server {...}</b> option on stdout and exit
-with a code of 0 or print nothing and exit with a non-zero
-exit code.</p>
+dynamically configure a server for a realm given by the
+username field in an Access-Request. The command can take
+two special forms, naptr:<i>service</i> or
+srv:<i>prefix</i>, or point to a script or executable.</p>
 
-<p style="margin-left:22%; margin-top: 1em">If the command
-exited with 0 an provided a valid server config, it will be
-combined with the statements in this server block, with the
-values returned by the command taking preference.</p>
+<p style="margin-left:22%; margin-top: 1em">The
+<b>naptr:</b> and <b>srv:</b> forms execute the
+corresponding DNS queries, either searching for
+<i>service</i> in NAPTR records (followed by SRV query), or
+querying for <i>prefix</i><b>.realm</b> SRV records. Finally
+a server block will be constructed for the dynamic realm
+taking this server block as a template and overriding the
+<b>host</b> entries with the content of the SRV records.</p>
+
+<p style="margin-left:22%; margin-top: 1em">Otherwise, the
+<i>command</i> should be an executable file or script, given
+with full path, that will be invoked with the name of the
+realm as its first and only argument. It should either print
+a valid <b>server {...}</b> block containing at least one
+<b>host</b> statement on stdout and exit with a code of 0,
+or print nothing and exit with a non-zero exit code. If the
+command exited with 0 and provided a valid server config, it
+will be combined with the statements in this server block,
+with the values returned by the command taking
+preference.</p>
 
 <p style="margin-left:22%; margin-top: 1em">An example of a
 shell script resolving the DNS NAPTR records for the realm
 and then the SRV records for each NAPTR matching
 &rsquo;x-eduroam:radius.tls&rsquo; is provided in
-<i>tools/naptr&minus;eduroam.sh</i>.</p>
+<i>tools/naptr&minus;eduroam.sh</i>. This is equivalent to
+configuring &rsquo;naptr:x-eduroam:radius.tls&rsquo;
+directly.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>StatusServer
@@ -853,6 +898,32 @@ DynamicLookupCommand is specified) Warning: when the dynamic
 lookup and connection process is slow, this wil block the
 respective realm for that time.</p>
 
+<p style="margin-left:11%; margin-top: 1em"><b>SNI
+(</b>on<b>|</b>off<b>)</b></p>
+
+<p style="margin-left:22%; margin-top: 1em">Override gobal
+SNI setting (see above). This is implicitly enabled if
+<b>SNIservername</b> is set.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>SNIservername</b>
+<i>sni</i></p>
+
+<p style="margin-left:22%;">Explicitly set the <i>sni</i>
+to request from the server, in case the server is specified
+by IP address or to override the hostname. Implicitly
+enables <b>SNI</b> for this server.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>DTLSForceMTU</b>
+<i>mtu</i></p>
+
+<p style="margin-left:22%;">Some non-Linux platforms are
+unable to query the MTU of a connection, causing DTLS to
+limit itself to 256 bytes and thus failing to connect.
+Manually set <i>mtu</i> to a large enough value so the
+initial DTLS cleint-hello fits without fragmentation.</p>
+
 <p style="margin-left:11%; margin-top: 1em">The meaning and
 syntax of the following options are exactly the same as for
 the client block. The details are not repeated here. Please
@@ -928,6 +999,14 @@ details.</p>
 <p style="margin-left:22%;">Enable sending
 Accounting-Response instead of ignoring Accounting-Requests
 when no <b>accoutingServer</b> are configured.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>AccountingLog
+(</b>on<b>|</b>off<b>)</b></p>
+
+<p style="margin-left:22%;">When responding to
+Accounting-Requests (<b>AccountingResponse on</b>), log the
+accounting data.</p>
 
 
 <p style="margin-left:11%; margin-top: 1em"><b>ReplyMessage</b>
