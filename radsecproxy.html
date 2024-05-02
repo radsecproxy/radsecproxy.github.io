@@ -1,5 +1,5 @@
-<!-- Creator     : groff version 1.22.4 -->
-<!-- CreationDate: Fri May 26 16:18:07 2023 -->
+<!-- Creator     : groff version 1.23.0 -->
+<!-- CreationDate: Thu May  2 20:36:37 2024 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -36,7 +36,7 @@
 </h2>
 
 
-<p style="margin-left:11%; margin-top: 1em">radsecproxy - a
+<p style="margin-left:9%; margin-top: 1em">radsecproxy - a
 generic RADIUS proxy that provides both RADIUS UDP and
 TCP/TLS (RadSec) transport.</p>
 
@@ -48,8 +48,8 @@ TCP/TLS (RadSec) transport.</p>
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
-<td width="11%"></td>
-<td width="89%">
+<td width="9%"></td>
+<td width="91%">
 
 
 <p style="margin-top: 1em">radsecproxy [&minus;c
@@ -62,14 +62,14 @@ TCP/TLS (RadSec) transport.</p>
 </h2>
 
 
-<p style="margin-left:11%; margin-top: 1em">radsecproxy is
-a <b>generic RADIUS proxy</b> that in addition to to usual
+<p style="margin-left:9%; margin-top: 1em">radsecproxy is a
+<b>generic RADIUS proxy</b> that in addition to to usual
 <b>RADIUS UDP</b> transport, also supports <b>TLS
 (RadSec)</b>. The aim is for the proxy to have sufficient
 features to be flexible, while at the same time to be small,
 efficient and easy to configure.</p>
 
-<p style="margin-left:11%; margin-top: 1em">The proxy was
+<p style="margin-left:9%; margin-top: 1em">The proxy was
 initially made to be able to deploy <b>RadSec</b> (RADIUS
 over TLS) so that all RADIUS communication across network
 links could be done using TLS, without modifying existing
@@ -79,7 +79,7 @@ configure the existing client/server to talk to localhost
 (the proxy) rather than other clients and servers
 directly.</p>
 
-<p style="margin-left:11%; margin-top: 1em">There are
+<p style="margin-left:9%; margin-top: 1em">There are
 however other situations where a RADIUS proxy might be
 useful. Some people deploy RADIUS topologies where they want
 to route RADIUS messages to the right server. The nodes that
@@ -97,28 +97,28 @@ use only IPv4 and some only IPv6.</p>
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
-<td width="11%"></td>
+<td width="9%"></td>
 <td width="3%">
 
 
 <p style="margin-top: 1em"><b>&minus;f</b></p></td>
-<td width="8%"></td>
-<td width="27%">
+<td width="6%"></td>
+<td width="23%">
 
 
 <p style="margin-top: 1em">Run in foreground.</p></td>
-<td width="51%">
+<td width="59%">
 </td></tr>
 </table>
 
-<p style="margin-left:22%;">By specifying this option, the
+<p style="margin-left:18%;">By specifying this option, the
 proxy will run in foreground mode. That is, it won&rsquo;t
 detach. Also all logging will be done to stderr.</p>
 
-<p style="margin-left:11%;"><b>&minus;d</b>
+<p style="margin-left:9%;"><b>&minus;d</b>
 <i>debuglevel</i></p>
 
-<p style="margin-left:22%;">This specifies the debug level.
+<p style="margin-left:18%;">This specifies the debug level.
 It must be set to 1, 2, 3, 4 or 5, where 1 logs only serious
 errors, and 5 logs everything. The default is 2 which logs
 errors, warnings and a few informational messages.</p>
@@ -126,21 +126,21 @@ errors, warnings and a few informational messages.</p>
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
-<td width="11%"></td>
+<td width="9%"></td>
 <td width="3%">
 
 
 <p><b>&minus;p</b></p></td>
-<td width="8%"></td>
-<td width="10%">
+<td width="6%"></td>
+<td width="9%">
 
 
 <p>Pretend</p></td>
-<td width="68%">
+<td width="73%">
 </td></tr>
 </table>
 
-<p style="margin-left:22%;">The proxy reads configuration
+<p style="margin-left:18%;">The proxy reads configuration
 files and performs initialisation as usual, but exits prior
 to creating any sockets. It will return different exit codes
 depending on whether the configuration files are okay. This
@@ -150,32 +150,32 @@ while another instance is running.</p>
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
-<td width="11%"></td>
+<td width="9%"></td>
 <td width="3%">
 
 
 <p style="margin-top: 1em"><b>&minus;v</b></p></td>
-<td width="8%"></td>
-<td width="35%">
+<td width="6%"></td>
+<td width="29%">
 
 
 <p style="margin-top: 1em">Print version and exit.</p></td>
-<td width="43%">
+<td width="53%">
 </td></tr>
 </table>
 
-<p style="margin-left:11%;"><b>&minus;c</b>
+<p style="margin-left:9%;"><b>&minus;c</b>
 <i>configfile</i></p>
 
-<p style="margin-left:22%;">This option allows you to
+<p style="margin-left:18%;">This option allows you to
 specify which config file to use. This is useful if you want
 to use a config file that is not in any of the default
 locations.</p>
 
-<p style="margin-left:11%;"><b>&minus;i</b>
+<p style="margin-left:9%;"><b>&minus;i</b>
 <i>pidfile</i></p>
 
-<p style="margin-left:22%;">This option tells the proxy to
+<p style="margin-left:18%;">This option tells the proxy to
 create a PID file with the specified path.</p>
 
 <h2>SIGNALS
@@ -183,32 +183,29 @@ create a PID file with the specified path.</p>
 </h2>
 
 
-<p style="margin-left:11%; margin-top: 1em">The proxy
+<p style="margin-left:9%; margin-top: 1em">The proxy
 generally exits on all signals. The exceptions are listed
 below.</p>
 
 <table width="100%" border="0" rules="none" frame="void"
        cellspacing="0" cellpadding="0">
 <tr valign="top" align="left">
-<td width="11%"></td>
-<td width="9%">
+<td width="9%"></td>
+<td width="8%">
 
 
 <p><b>SIGHUP</b></p></td>
-<td width="2%"></td>
-<td width="78%">
-
-
-<p>When logging to a file, this signal forces a reopen of
-the log file.</p></td></tr>
+<td width="83%">
+</td></tr>
 </table>
 
-<p style="margin-left:22%;">When using TLS or DTLS, reload
-certificate CRLs.</p>
+<p style="margin-left:18%; margin-top: 1em">When logging to
+a file, this signal forces a reopen of the log file. <br>
+When using TLS or DTLS, reload certificate CRLs.</p>
 
-<p style="margin-left:11%;"><b>SIGPIPE</b></p>
+<p style="margin-left:9%;"><b>SIGPIPE</b></p>
 
-<p style="margin-left:22%;">This signal is ignored.</p>
+<p style="margin-left:18%;">This signal is ignored.</p>
 
 <h2>FILES
 <a name="FILES"></a>
@@ -216,9 +213,9 @@ certificate CRLs.</p>
 
 
 
-<p style="margin-left:11%; margin-top: 1em"><b>/usr/local/etc/radsecproxy.conf</b></p>
+<p style="margin-left:9%; margin-top: 1em"><b>/usr/local/etc/radsecproxy.conf</b></p>
 
-<p style="margin-left:22%; margin-top: 1em">The default
+<p style="margin-left:18%; margin-top: 1em">The default
 configuration file.</p>
 
 <h2>SEE ALSO
@@ -227,7 +224,7 @@ configuration file.</p>
 
 
 
-<p style="margin-left:11%; margin-top: 1em">radsecproxy.conf(5),
+<p style="margin-left:9%; margin-top: 1em">radsecproxy.conf(5),
 radsecproxy-hash(8)</p>
 <hr>
 </body>
