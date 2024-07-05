@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Thu May  2 20:36:38 2024 -->
+<!-- CreationDate: Fri Jul  5 17:15:33 2024 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -142,14 +142,17 @@ option &quot;value with space&quot; <br>
 
 <p style="margin-left:9%; margin-top: 1em">Option value
 characters can also be written in hex for options requiring
-a string type value. This is done by writing the character %
-followed by two hexadecimal digits. If a % is used without
-two following hexadecimal digits, the % and the following
-characters are used as written. If you want to write a % and
-not use this decoding, you may of course write % in hex;
-i.e., %25. As %00 would terminate a string, this value is
-not converted in most cases, except when used with rewrite
-statements or secrets.</p>
+a string type value. A % character followed by two
+hexadecimal digits will be replaced by its byte value.
+Longer hex strings can be escaped with %%. In this case all
+following hexadecimal digit pairs will be replace by byte
+values until the first non-hex character. If a % is used
+without two following hexadecimal digits, the % and the
+following characters are used as written. If you want to
+write a % and not use this decoding, you may of course write
+% in hex; i.e., %25. As %00 would terminate a string, this
+value is not converted in most cases, except when used with
+rewrite statements or secrets.</p>
 
 <p style="margin-left:9%; margin-top: 1em">Some options
 allow or require the use of regular expressions, denoted as
@@ -426,6 +429,18 @@ extension for all TLS and DTLS servers which specify a
 hostname (not IP address). This can be overridden in server
 blocks, see below.</p>
 
+<p style="margin-left:9%; margin-top: 1em"><b>VerifyEAP
+(</b>on<b>|</b>off<b>)</b></p>
+
+<p style="margin-left:18%;">A radius proxy is mostly
+agnostic to the contents of the attributes within a radius
+message and forwards them as-is. However wrong EAP
+attributes can lead to bad user experience. Thus radsecproxy
+checks the content length of the contained EAP message and
+denies the access-request if it doesn&rsquo;t match the
+attribute length. In case malformatted EAP attributes are
+inentional, this behaviour can be disabled (default on).</p>
+
 <p style="margin-left:9%; margin-top: 1em"><b>Include</b>
 <i>file</i></p>
 
@@ -545,7 +560,17 @@ this will override the global option for this client.</p>
 
 <p style="margin-left:18%;">Specify the <i>type</i>
 (protocol) of the client. Available options are <b>UDP</b>,
-<b>TCP</b>, <b>TLS</b> and <b>DTLS</b>.</p>
+<b>TCP</b>, <b>TLS</b> and <b>DTLS</b>. <br>
+While TLS and DTLS are secure, enctrypted transports, UDP
+and TCP are not. Radius uses the shared secret only to
+encrypt certain critical attributes, but most of the Radius
+data is sent in clear. Protection against manipulation is
+only provided if the client uses the Message-Authenticator
+attribute. <br>
+Therefore UDP and TCP should only be used in secured
+networks or when an underying secure transport such as IPSEC
+or MACSEC is used. UDP and TCP SHOULD NOT be used across the
+internet.</p>
 
 <p style="margin-left:9%; margin-top: 1em"><b>Secret</b>
 <i>secret</i></p>
@@ -607,6 +632,41 @@ of certificate attributes. Currently matching of CN and
 SubjectAltName types URI, DNS, IP, rID, and otherName is
 supported. If specified multiple times, all terms must match
 for the certificate to be considered valid.</p>
+
+<p style="margin-left:9%; margin-top: 1em"><b>PSKkey</b>
+<i>key</i></p>
+
+<p style="margin-left:18%;">For TLS, use TLS-PSK (pre
+shared key) instead of certificate based authentication. If
+specified, <b>PSKidentity</b> must also be provided. The
+<i>key</i> must be at least 16 bytes long. To provide the
+<i>key</i> in hex, use the %% escaping (see CONFIGURATION
+SYNTAX).</p>
+
+<p style="margin-left:18%; margin-top: 1em">In addition to
+the psk, peers must also agree on the key derivation hash
+function. For this, the server simply uses the hash funciton
+of the negotiated cipher as this negotiation must yield a
+compatible cipher anyway. To ensure unambiguous cipher and
+hash selection, only use ciphers with the same hash function
+in the <b>CipherSuites</b> of the <b>tls</b> block. If no
+<b>tls</b> block is specified, a default config with SHA256
+is used.</p>
+
+<p style="margin-left:18%; margin-top: 1em">Note: only
+TLS1.3 PSK is supported and only for TLS, not DTLS (pending
+OpenSSL DTLS1.3 support).</p>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>PSKidentity</b>
+<i>identity</i></p>
+
+<p style="margin-left:18%;">The TLS-PSK <i>identity</i> to
+identify the client. When omitted, the <b>client</b>
+<i>name</i> is used as the identity. When using TLS-PSK, all
+clients are identified by thier PSK identity, however it is
+highly recommended to limit the allowed source address(es)
+using the <b>Host</b> <i>address</i> option.</p>
 
 
 <p style="margin-left:9%; margin-top: 1em"><b>DuplicateInterval</b>
@@ -687,6 +747,28 @@ client. Example usage:</p>
 
 <p style="margin-left:18%; margin-top: 1em">RewriteAttribute
 User-Name:/&#710;(.*)@local$/\1@example.com/</p>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>RequireMessageAuthenticator
+(</b>on<b>|</b>off<b>)</b></p>
+
+<p style="margin-left:18%;">Require all Access-Requests be
+signed with a Message-Authenticator. <br>
+This should be enabled if the client is a proxy, or a NAS
+known to use Message-Authenticator (e.g. all EAP based NAS
+like Wifi). <br>
+This setting is ignored when using TLS/DTLS transport.</p>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>RequireMessageAuthenticatorProxy
+(</b>on<b>|</b>off)</p>
+
+<p style="margin-left:18%;">Require all Access-Requests
+containing a Proxy-State attribute to be signed with a
+Message-Authenticaor. <br>
+This should always be enabled if the client is a NAS. <br>
+This setting is ignored when using TLS/DLTS transport or
+when <b>RequireMessageAuthenticator</b> is enabled.</p>
 
 <h2>SERVER BLOCK
 <a name="SERVER BLOCK"></a>
@@ -770,16 +852,6 @@ and/or port to use for this server. See <b>Source...</b>
 options above.</p>
 
 
-<p style="margin-left:9%; margin-top: 1em"><b>ServerName</b>
-<i>servername</i></p>
-
-<p style="margin-left:18%;">Use <i>servername</i> for the
-certificate name check instead of <b>host</b> or the server
-block name (e.g. if <b>host</b> uses static IP address).
-Additionally, this name is used for SNI (if enabled), unless
-<b>SNIservername</b> is set.</p>
-
-
 <p style="margin-left:9%; margin-top: 1em"><b>DynamicLookupCommand</b>
 <i>command</i></p>
 
@@ -817,6 +889,45 @@ and then the SRV records for each NAPTR matching
 <i>tools/naptr&minus;eduroam.sh</i>. This is equivalent to
 configuring &rsquo;naptr:x-eduroam:radius.tls&rsquo;
 directly.</p>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>ServerName</b>
+<i>servername</i></p>
+
+<p style="margin-left:18%;">Use <i>servername</i> for the
+certificate name check instead of <b>host</b> or the server
+block name (e.g. if <b>host</b> uses static IP address).
+Additionally, this name is used for SNI (if enabled), unless
+<b>SNIservername</b> is set.</p>
+
+<p style="margin-left:9%; margin-top: 1em"><b>SNI
+(</b>on<b>|</b>off<b>)</b></p>
+
+<p style="margin-left:18%;">Override gobal SNI setting (see
+above). This is implicitly enabled if <b>SNIservername</b>
+is set.</p>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>SNIservername</b>
+<i>sni</i></p>
+
+<p style="margin-left:18%;">Explicitly set the <i>sni</i>
+to request from the server, in case the server is specified
+by IP address or to override the hostname. Implicitly
+enables <b>SNI</b> for this server.</p>
+
+<p style="margin-left:9%; margin-top: 1em"><b>PSKkey</b>
+<i>key</i> <b><br>
+PSKidentity</b> <i>identity</i></p>
+
+<p style="margin-left:18%;">The meaning of these options
+are very similar as for the client block, with minor
+differences. <br>
+- The <i>identity</i> must always be provided and cannot be
+derived from the <b>server</b> <i>name</i>. <br>
+- For the key derivation hash funciton, the hash function of
+the first cipher in the <b>CipherSuites</b> of the
+referenced <b>tls</b> block is used.</p>
 
 <p style="margin-left:9%; margin-top: 1em"><b>StatusServer
 (</b>on<b>|</b>off<b>|</b>minimal<b>|</b>auto<b>)</b></p>
@@ -899,22 +1010,6 @@ DynamicLookupCommand is specified) Warning: when the dynamic
 lookup and connection process is slow, this wil block the
 respective realm for that time.</p>
 
-<p style="margin-left:9%; margin-top: 1em"><b>SNI
-(</b>on<b>|</b>off<b>)</b></p>
-
-<p style="margin-left:18%; margin-top: 1em">Override gobal
-SNI setting (see above). This is implicitly enabled if
-<b>SNIservername</b> is set.</p>
-
-
-<p style="margin-left:9%; margin-top: 1em"><b>SNIservername</b>
-<i>sni</i></p>
-
-<p style="margin-left:18%;">Explicitly set the <i>sni</i>
-to request from the server, in case the server is specified
-by IP address or to override the hostname. Implicitly
-enables <b>SNI</b> for this server.</p>
-
 
 <p style="margin-left:9%; margin-top: 1em"><b>DTLSForceMTU</b>
 <i>mtu</i></p>
@@ -923,7 +1018,17 @@ enables <b>SNI</b> for this server.</p>
 unable to query the MTU of a connection, causing DTLS to
 limit itself to 256 bytes and thus failing to connect.
 Manually set <i>mtu</i> to a large enough value so the
-initial DTLS cleint-hello fits without fragmentation.</p>
+initial DTLS client-hello fits without fragmentation.</p>
+
+
+<p style="margin-left:9%; margin-top: 1em"><b>RequireMessageAuthenticator
+(</b>on<b>|</b>off<b>)</b></p>
+
+<p style="margin-left:18%;">Require all responses to
+Access-Requests be signed with a Message-Authenticator. <br>
+This should always be be enabled unless the server is known
+to only support legacy RADIUS/UDP behavior. <br>
+This setting is ignored when using TLS/DTLS transport.</p>
 
 <p style="margin-left:9%; margin-top: 1em">The meaning and
 syntax of the following options are exactly the same as for
@@ -1073,17 +1178,18 @@ treated the same, but independently of the other
 servers.</p>
 
 <p style="margin-left:9%; margin-top: 1em">If there is no
-<b>Server</b> option, the proxy will if <b>ReplyMessage</b>
-is specified, reply back to the client with an Access Reject
-message. The message contains a replyMessage attribute with
-the value as specified by the <b>ReplyMessage</b> option.
-Note that this is different from having no match since then
-the request is simply ignored. This can be used to catch all
-undefined sub-domains or even all undefined realms by
-configuring either a regex match like /@.*\.example\.com/ or
-the realm <b>*</b> with no server option. Another use-case
-is to block a specific pattern in the username or realm part
-using a regex.</p>
+<b>Server</b> option (or all dynamic lookups have failed),
+the proxy will if <b>ReplyMessage</b> is specified, reply
+back to the client with an Access Reject message. The
+message contains a replyMessage attribute with the value as
+specified by the <b>ReplyMessage</b> option. Note that this
+is different from having no match since then the request is
+simply ignored. This can be used to catch all undefined
+sub-domains or even all undefined realms by configuring
+either a regex match like /@.*\.example\.com/ or the realm
+<b>*</b> with no server option. Another use-case is to block
+a specific pattern in the username or realm part using a
+regex.</p>
 
 <p style="margin-left:9%; margin-top: 1em">If there is no
 <b>AccountingServer</b> option, the proxy will normally do
@@ -1149,14 +1255,17 @@ options in a tls block are:</p>
 <i>file</i></p>
 
 <p style="margin-left:18%;">The CA certificate file used to
-verify the peers certificate.</p>
+verify the peers certificate. The <i>file</i> can include
+multiple certificates as well as CRLs.</p>
 
 
 <p style="margin-left:9%; margin-top: 1em"><b>CACertificatePath</b>
 <i>path</i></p>
 
 <p style="margin-left:18%;">The path to search for CA or
-intermediate certificates.</p>
+intermediate certificates and CRLs. All files must have
+hashed symbolic links to be found. See
+<b>openssl-rehash</b>(1).</p>
 
 
 <p style="margin-left:9%; margin-top: 1em"><b>CertificateFile</b>
@@ -1164,7 +1273,9 @@ intermediate certificates.</p>
 
 <p style="margin-left:18%;">The server certificate this
 proxy will use. The file may also contain a certificate
-chain.</p>
+chain. Any missing certificates to complete the chain will
+be searched for in the <b>CACertificateFile</b> and
+<b>CACertificatePath</b>.</p>
 
 
 <p style="margin-left:9%; margin-top: 1em"><b>CertificateKeyFile</b>
@@ -1194,7 +1305,9 @@ in the peer certificate.</p>
 (</b>on<b>|</b>off<b>)</b></p>
 
 <p style="margin-left:18%;">Enable checking peer
-certificate against the CRL (default off). <br>
+certificate against the CRL (default off). Note if enabled,
+all CAs in this context MUST provide a CRL, otherwise they
+are considered untrusted. <br>
 Note that radsecproxy does not fetch the CRLs itself. This
 has to be done separately, e.g. with <b>fetch-crl</b>(8)</p>
 
@@ -1205,10 +1318,12 @@ has to be done separately, e.g. with <b>fetch-crl</b>(8)</p>
 <p style="margin-left:18%;">Specify how many <i>seconds</i>
 the CA and CRL information should be cached. By default, the
 CA and CRL are loaded at startup and cached indefinetely.
-After the configured time, the CA CRL are re-read.
+After the configured time, the CA and CRL are re-read.
 Alternatively, reloading the CA and CRL can be triggered by
 sending a SIGHUP to the radsecproxy process. This option may
-be set to zero to disable caching.</p>
+be set to zero to disable caching, but be warned: this might
+have a huge performance impact. <br>
+Any negative value will disable the cache expiry.</p>
 
 
 <p style="margin-left:9%; margin-top: 1em"><b>CipherList</b>
