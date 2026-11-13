@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Mon Aug 10 08:33:54 2026 -->
+<!-- CreationDate: Fri Nov 13 17:14:28 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -386,7 +386,7 @@ the TTL attribute, or two numerical values separated by
 column specifying a vendor attribute.</p>
 
 <p style="margin-left:9%; margin-top: 1em"><b>AddTTL</b>
-1-255</p>
+0-255</p>
 
 <p style="margin-left:18%;">If a TTL attribute is present,
 the proxy will decrement the value and discard the message
@@ -684,7 +684,7 @@ the new request (if it is still processing the previous
 one), or returned a copy of the previous reply.</p>
 
 <p style="margin-left:9%; margin-top: 1em"><b>AddTTL</b>
-1-255</p>
+0-255</p>
 
 <p style="margin-left:18%;">The AddTTL option has the same
 meaning as the option used in the basic config. See the
@@ -1047,7 +1047,7 @@ Secret</b> <i>secret</i> <b><br>
 TLS</b> <i>tls</i> <b><br>
 CertificateNameCheck (</b>on<b>|</b>off<b>) <br>
 MatchCertificateAttribute</b> ... <b><br>
-AddTTL</b> 1-255 <b><br>
+AddTTL</b> 0-255 <b><br>
 TCPKeepalive (</b>on<b>|</b>off<b>)</b></p>
 
 <h2>REALM BLOCK
